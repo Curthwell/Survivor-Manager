@@ -8,24 +8,29 @@ public class Survivor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false)
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 
     @Column(name = "age")
     private int age;
 
-    @Column(name = "gender")
+    @Column(name = "gender", nullable = false)
     private String gender;
 
     @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "latitude", column = @Column(nullable = false)),
+            @AttributeOverride(name = "longitude", column = @Column(nullable = false))
+    })
     private Location lastlocation;
 
     @Embedded
     private Resource resource;
 
-    @Column(name = "status")
+    @Column(name = "status", nullable = false)
     private boolean infectedStatus;
 
     @Transient

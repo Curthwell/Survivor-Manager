@@ -2,28 +2,28 @@ package com.Survivor.app.Service.ServiceImpl;
 
 import com.Survivor.app.Entity.Robot;
 import com.Survivor.app.Service.RobotService;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Flux;
 
-import java.util.Arrays;
-import java.util.List;
+
 @Service
 public class RobotServiceImpl implements RobotService {
+    private static final String ROBOT_CPU_URL ="https://robotstakeover20210903110417.azurewebsites.net/robotcpu" ;
+    private final WebClient webClient;
 
-    private static final String ROBOT_CPU_URL = "https://robotstakeover20210903110417.azurewebsites.net/robotcpu";
-
-    private final RestTemplate restTemplate;
-
-    public RobotServiceImpl(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
+    public RobotServiceImpl(WebClient.Builder webClientBuilder) {
+        this.webClient = webClientBuilder.baseUrl(ROBOT_CPU_URL).build();
     }
+
 
     @Override
-    public List<Robot> getAllRobots() {
-        ResponseEntity<Robot[]> response = restTemplate.getForEntity(ROBOT_CPU_URL, Robot[].class);
-        Robot[] robotsArray = response.getBody();
-        List<Robot> robots = Arrays.asList(robotsArray);
-        return robots;
+    public Flux<Robot> getAllRobots() {
+        return webClient.get()
+                .accept(MediaType.APPLICATION_JSON)
+                .retrieve()
+                .bodyToFlux(Robot.class);
     }
 }
+

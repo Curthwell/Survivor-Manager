@@ -6,16 +6,16 @@ import java.util.Date;
 public class Robot {
     private String model;
     private String serialNumber;
-    private LocalDateTime manufacturedDate;
+    //private LocalDateTime manufacturedDate;
     private String category;
 
     public Robot() {
     }
-
-    public Robot(String model, String serialNumber, LocalDateTime manufacturedDate, String category) {
+//, LocalDateTime manufacturedDate
+    public Robot(String model, String serialNumber, String category) {
         this.model = model;
         this.serialNumber = serialNumber;
-        this.manufacturedDate = manufacturedDate;
+        //this.manufacturedDate = manufacturedDate;
         this.category = category;
     }
 
@@ -35,13 +35,15 @@ public class Robot {
         this.serialNumber = serialNumber;
     }
 
-    public LocalDateTime getManufacturedDate() {
+/*    public LocalDateTime getManufacturedDate() {
         return manufacturedDate;
-    }
+    }*/
 
+/*
     public void setManufacturedDate(LocalDateTime manufacturedDate) {
         this.manufacturedDate = manufacturedDate;
     }
+*/
 
     public String getCategory() {
         return category;
